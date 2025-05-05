@@ -1,18 +1,11 @@
 import "@/global.css";
-import { Stack } from "expo-router";
+import { Slot } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
-
-        <Stack.Screen
-          name="index"
-          options={{ title: "Splash", headerShown: false }}
-        />
-      </Stack>
+      <Slot />
     </SafeAreaProvider>
   );
 }
