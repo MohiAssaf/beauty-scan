@@ -55,7 +55,7 @@ export default function TabButton({
           name={
             routeName === "index"
               ? "home"
-              : routeName === "analyze"
+              : routeName === "analysis"
               ? "camera"
               : routeName === "profile"
               ? "person"
