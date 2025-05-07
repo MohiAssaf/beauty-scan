@@ -3,6 +3,7 @@ import { Stack, SplashScreen, useRouter } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useState } from "react";
 import FaceScanSplash from "@/components/SplashScreen/FaceScan";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,12 +26,14 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <Stack
-        screenOptions={{ headerShown: false, animation: "slide_from_right" }}
-      >
-        <Stack.Screen name="stack" />
-        <Stack.Screen name="(tabs)" />
-      </Stack>
+      <ThemeProvider>
+        <Stack
+          screenOptions={{ headerShown: false, animation: "slide_from_right" }}
+        >
+          <Stack.Screen name="stack" />
+          <Stack.Screen name="(tabs)" />
+        </Stack>
+      </ThemeProvider>
     </SafeAreaProvider>
   );
 }
