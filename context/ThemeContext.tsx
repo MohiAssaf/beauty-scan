@@ -1,15 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-type ThemeType = "light" | "dark";
-
-interface ThemeContextProps {
-  theme: ThemeType;
-  isDark: boolean;
-  setTheme: (theme: ThemeType) => Promise<void>;
-  toggleTheme: () => Promise<void>;
-  isHydrated: boolean;
-}
+import { ThemeContextProps, ThemeType } from "@/types/Theme";
 
 const ThemeContext = createContext<ThemeContextProps>({
   theme: "light",
