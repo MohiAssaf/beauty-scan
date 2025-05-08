@@ -7,6 +7,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
+import { getIconName } from "@/utils/iconName";
 
 export default function TabButton({
   onPress,
@@ -51,19 +52,7 @@ export default function TabButton({
       className="flex-1 justify-center items-center gap-2"
     >
       <Animated.View style={animatedIconSize}>
-        <Ionicons
-          name={
-            routeName === "index"
-              ? "home"
-              : routeName === "analysis"
-              ? "camera"
-              : routeName === "profile"
-              ? "person"
-              : "help-circle"
-          }
-          size={20}
-          color={color}
-        />
+        <Ionicons name={getIconName(routeName)} size={20} color={color} />
       </Animated.View>
 
       <Animated.Text style={[{ color: color }, animtedBtnText]}>
