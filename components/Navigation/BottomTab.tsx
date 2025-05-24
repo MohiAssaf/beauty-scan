@@ -7,14 +7,12 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import { useTheme } from "@/context/ThemeContext";
 
 export default function BottomTab({
   state,
   descriptors,
   navigation,
 }: BottomTabBarProps) {
-  const { isDark } = useTheme();
   const [dimensions, setDimensions] = useState({ height: 20, width: 20 });
   const buttonWidth = dimensions.width / state.routes.length;
   const tabPositionX = useSharedValue(0);
@@ -35,13 +33,11 @@ export default function BottomTab({
   return (
     <View
       onLayout={onTabBarLayoutChange}
-      className={`absolute flex-row justify-between items-center bottom-10 mx-10 py-4 rounded-2xl ${
-        isDark ? "bg-card-dark" : "bg-white"
-      }`}
+      className="absolute flex-row justify-between items-center bottom-10 mx-10 py-4 rounded-2xl bg-white"
       style={{
-        shadowColor: isDark ? "#4F9BFF" : "#000",
+        shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: isDark ? 0.1 : 0.05,
+        shadowOpacity: 0.05,
         shadowRadius: 8,
         elevation: 3,
       }}
@@ -50,7 +46,7 @@ export default function BottomTab({
         style={[
           {
             position: "absolute",
-            backgroundColor: isDark ? "#4F9BFF" : "#3B82F6",
+            backgroundColor: "#3B82F6",
             borderRadius: 30,
             marginHorizontal: 12,
             height: dimensions.height - 15,
@@ -100,7 +96,7 @@ export default function BottomTab({
             onLongPress={onLongPress}
             routeName={route.name}
             isFocused={isFocused}
-            color={isFocused ? "#fff" : isDark ? "#94A3C8" : "#64748B"}
+            color={isFocused ? "#fff" : "#64748B"}
             label={label}
           />
         );
