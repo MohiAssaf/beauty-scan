@@ -1,7 +1,7 @@
 import "@/global.css";
 import { Stack, SplashScreen, useRouter } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FaceScanSplash from "@/components/SplashScreen/FaceScan";
 
 SplashScreen.preventAutoHideAsync();
@@ -9,15 +9,25 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const router = useRouter();
   const [isReady, setIsReady] = useState(false);
+  const [expoSplashHidden, setExpoSplashHidden] = useState(false);
 
-  const handleSplashFinish = async () => {
-    await SplashScreen.hideAsync();
+  useEffect(() => {
+    (async () => {
+      await SplashScreen.hideAsync();
+      setExpoSplashHidden(true);
+    })();
+  }, []);
+
+  const handleSplashFinish = () => {
     setIsReady(true);
-
     setTimeout(() => {
       router.replace("/(tabs)");
     }, 50);
   };
+
+  if (!expoSplashHidden) {
+    return null;
+  }
 
   if (!isReady) {
     return <FaceScanSplash onFinish={handleSplashFinish} />;

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Animated } from "react-native";
+import { Animated, Platform } from "react-native";
 import LottieView from "lottie-react-native";
 
 interface SplashScreenProps {
@@ -11,18 +11,23 @@ export default function FaceScanSplash({ onFinish }: SplashScreenProps) {
   const opacity = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
+    animationRef.current?.play();
+
     const timer = setTimeout(() => {
       Animated.timing(opacity, {
         toValue: 0,
-        duration: 500,
+        duration: 1000,
         useNativeDriver: true,
-      }).start(() => {
-        onFinish();
-      });
+      }).start(onFinish);
     }, 3500);
 
     return () => clearTimeout(timer);
   }, []);
+
+  const handleAnimationFailure = () => {
+    if (__DEV__) console.log("Animation failed - using fallback");
+    onFinish();
+  };
 
   return (
     <Animated.View
@@ -37,10 +42,16 @@ export default function FaceScanSplash({ onFinish }: SplashScreenProps) {
       <LottieView
         ref={animationRef}
         source={require("@/assets/Animation-facescan.json")}
-        style={{ width: "40%", aspectRatio: 1 }}
+        style={{
+          width: Platform.select({ ios: "40%", android: "50%" }),
+          aspectRatio: 1,
+          maxWidth: 300,
+        }}
         loop={false}
         resizeMode="contain"
-        autoPlay
+        renderMode="AUTOMATIC"
+        speed={1}
+        onAnimationFailure={handleAnimationFailure}
       />
     </Animated.View>
   );
